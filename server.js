@@ -49,7 +49,7 @@ app.get("/salon",function (req,res) {
 });
 
 
-let port = 3000;
+let port = process.env.PORT || 8080;
 
 
 let server = app.listen(port, function () {
