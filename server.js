@@ -78,7 +78,7 @@ app.get("/messages/:salon",function (req,res) {
     var salon = req.params.salon;
     let sms = [];
     for(let i=0 ;i<messages.length;i++){
-        if(messages[i].salon=salon){
+        if(messages[i].salon==salon){
             sms.push(messages[i]);
         }
     }
