@@ -49,7 +49,7 @@ app.get("/salon",function (req,res) {
     });
 });
 
-app.post("subscribe",function (req,res) {
+app.post("/subscribe",function (req,res) {
     let discussion = {
         "username":req.body.username,
         "salon":req.body.salon
