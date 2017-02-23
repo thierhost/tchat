@@ -24,6 +24,7 @@ app.use(function(req, res, next) {
 
 var Salon = require('./salon');
 var discussions = [];
+var messages = [];
 
 app.post("/salon",function (req,res) {
     let salon = new Salon({
@@ -61,6 +62,27 @@ app.post("/subscribe",function (req,res) {
     };
     discussions.push(discussion);
     res.json("good");
+});
+
+app.post("/messages",function (req,res) {
+   let message= {
+       "username":req.body.username,
+       "salon":req.body.salon,
+       "message": req.body.message
+   };
+   messages.push(message);
+   res.json("good");
+});
+
+app.get("/messages/:salon",function (req,res) {
+    var salon = req.params.salon;
+    let sms = [];
+    for(let i=0 ;i<messages.length;i++){
+        if(messages[i].salon=salon){
+            sms.push(messages[i]);
+        }
+    }
+    res.json(sms);
 });
 
 
