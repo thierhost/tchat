@@ -23,19 +23,19 @@ app.use(function(req, res, next) {
 });
 
 var Salon = require('./salon');
+var Message = require('./message');
 var discussions = [];
-var messages = [];
 
 app.post("/salon",function (req,res) {
     let salon = new Salon({
         title : req.body.title
     });
-    salon.save(function (err,user) {
+    salon.save(function (err,salon) {
         if(err){
             console.log(err);
             res.json(err);
         }else{
-            if(user){
+            if(salon){
                 console.log('salon created '+ salon);
                 res.json(salon);
             }else{
@@ -65,17 +65,39 @@ app.post("/subscribe",function (req,res) {
 });
 
 app.post("/messages",function (req,res) {
-   let message= {
+   let message= new Message({
        "username":req.body.username,
        "salon":req.body.salon,
        "message": req.body.message
-   };
-   messages.push(message);
-   res.json("good");
+   });
+    message.save(function (err,message) {
+        if(err){
+            console.log(err);
+            res.json(err);
+        }else{
+            if(message){
+                console.log('message created '+ message);
+                //res.json(message);
+                res.json("good");
+            }else{
+                console.log(' impossible de creer le message');
+                res.json(err);
+            }
+        }
+    });
 });
 
 app.get("/messages/:salon",function (req,res) {
     let salon = req.params.salon;
+    Message.find({'salon':salon},function (err,messages) {
+        if(err) {
+            res.json({'not-found':404});
+        } else{
+            res.json(messagess);
+        }
+    });
+
+    /*
     let sms = [];
     for(let i=0 ;i<messages.length;i++){
         if(messages[i].salon==salon){
@@ -83,6 +105,7 @@ app.get("/messages/:salon",function (req,res) {
         }
     }
     res.json(sms);
+    */
 });
 
 
