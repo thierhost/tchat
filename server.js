@@ -93,7 +93,7 @@ app.get("/messages/:salon",function (req,res) {
         if(err) {
             res.json({'not-found':404});
         } else{
-            res.json(messagess);
+            res.json(messages);
         }
     });
 
